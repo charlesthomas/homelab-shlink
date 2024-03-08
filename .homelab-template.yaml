@@ -1,0 +1,23 @@
+_commit: v1.6.14-2-g296c517
+_src_path: /home/crthomas/code/charlesthomas/homelab-template
+additionalResources: ''
+backups: false
+helm: false
+ingress: false
+labels: ''
+name: shlink
+namespace: shlink
+pvc: false
+reloader: true
+resources:
+- configmaps.yaml
+- deployments.yaml
+- external-secrets.yaml
+- ingresses.yaml
+- secrets.yaml
+- service-accounts.yaml
+- statefulsets.yaml
+service: false
+serviceAccount: false
+upstreamURL: https://shlink.io/
+url: https://github.com/charlesthomas/homelab-shlink

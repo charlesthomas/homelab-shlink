@@ -1,0 +1,38 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: shlink
+
+commonAnnotations:
+  repo: https://github.com/charlesthomas/homelab-shlink
+
+resources:
+- resources/configmaps.yaml
+- resources/deployments.yaml
+- resources/external-secrets.yaml
+- resources/ingresses.yaml
+- resources/namespaces.yaml
+- resources/secrets.yaml
+- resources/service-accounts.yaml
+- resources/statefulsets.yaml
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: all
+      namespace: shlink
+      annotations:
+        reloader.stakater.com/auto: "true"
+  target:
+    kind: Deployment
+- patch: |-
+    apiVersion: apps/v1
+    kind: StatefulSet
+    metadata:
+      name: all
+      namespace: shlink
+      annotations:
+        reloader.stakater.com/auto: "true"
+  target:
+    kind: StatefulSet
