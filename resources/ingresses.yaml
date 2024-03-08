@@ -31,6 +31,13 @@ kind: Ingress
 metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: shlink.crt.house
+    gethomepage.dev/href: https://shlink.crt.house
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Link Shortener
+    gethomepage.dev/group: Kubernetes
+    gethomepage.dev/icon: shlink
+    gethomepage.dev/name: Shlink
+    gethomepage.dev/pod-selector: ""
   labels:
     app: shlink-web-client
   name: shlink-web-client
