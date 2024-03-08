@@ -1,0 +1,53 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: href.crt.lol
+    external-dns.alpha.kubernetes.io/target: crt.lol
+  labels:
+    app: shlink
+  name: shlink
+  namespace: shlink
+spec:
+  ingressClassName: nginx-external
+  rules:
+  - host: href.crt.lol
+    http:
+      paths:
+      - backend:
+          service:
+            name: shlink-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - href.crt.lol
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: shlink.crt.house
+  labels:
+    app: shlink-web-client
+  name: shlink-web-client
+  namespace: shlink
+spec:
+  ingressClassName: nginx-crt-house
+  rules:
+  - host: shlink.crt.house
+    http:
+      paths:
+      - backend:
+          service:
+            name: shlink-web-client
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - shlink.crt.house

@@ -1,0 +1,175 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shlink
+  namespace: shlink
+  labels:
+    app.kubernetes.io/name: shlink
+    app.kubernetes.io/instance: shlink
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: shlink
+      app.kubernetes.io/instance: shlink
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: shlink
+        app.kubernetes.io/instance: shlink
+    spec:
+      serviceAccountName: shlink
+      containers:
+        - name: shlink
+          image: "shlinkio/shlink:3.7.1"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SHORT_DOMAIN_HOST
+              value: "href.crt.lol"
+            - name: SHORT_DOMAIN_SCHEMA
+              value: "http"
+            - name:  DB_DRIVER
+              value: "maria"
+            - name:  DB_HOST
+              value: shlink-mariadb
+            - name:  DB_USER
+              value: "shlink"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mariadb-password
+            - name: INVALID_SHORT_URL_REDIRECT_TO
+              value: https://charlesthomas.dev
+            - name: BASE_URL_REDIRECT_TO
+              value: https://charlesthomas.dev
+            - name: ANONYMIZE_REMOTE_ADDR
+              value: "false"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /rest/v2/health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 60
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shlink-web-client
+  namespace: shlink
+  labels:
+    app: shlink-web-client
+    app.kubernetes.io/name: shlink-web-client
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: shlink-web-client
+      app.kubernetes.io/name: shlink-web-client
+  template:
+    metadata:
+      labels:
+        app: shlink-web-client
+        app.kubernetes.io/name: shlink-web-client
+    spec:
+      serviceAccountName: default
+      automountServiceAccountToken: false
+      restartPolicy: Always
+      containers:
+        - name: shlink-web-client
+          image: shlinkio/shlink-web-client:3.10.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
+              hostPort: null
+          livenessProbe:
+            httpGet:
+              port: 80
+              path: /
+              scheme: HTTP
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+              scheme: HTTP
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            successThreshold: 2
+            timeoutSeconds: 5
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            failureThreshold: 60
+            successThreshold: 1
+            timeoutSeconds: 2
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 4000m
+              memory: 8Gi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+            privileged: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+                - CHOWN
+                - SETUID
+                - SETGID
+                - FOWNER
+                - DAC_OVERRIDE
+              drop:
+                - ALL
+          env:
+            - name: "TZ"
+              value: "America/Detroit"
+            - name: "UMASK"
+              value: "0022"
+            - name: "UMASK_SET"
+              value: "0022"
+            - name: "PUID"
+              value: "568"
+            - name: "USER_ID"
+              value: "568"
+            - name: "UID"
+              value: "568"
+            - name: "PGID"
+              value: "568"
+            - name: "GROUP_ID"
+              value: "568"
+            - name: "GID"
+              value: "568"
+            - name: "SHLINK_SERVER_API_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: shlink-api-key
+                  key: api-token
+            - name: "SHLINK_SERVER_NAME"
+              value: "href.crt.lol"
+            - name: "SHLINK_SERVER_URL"
+              value: "https://href.crt.lol"
