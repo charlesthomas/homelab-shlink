@@ -14,8 +14,8 @@ resources:
 - deployments.yaml
 - external-secrets.yaml
 - ingresses.yaml
-- secrets.yaml
 - service-accounts.yaml
+- services.yaml
 - statefulsets.yaml
 service: false
 serviceAccount: false

@@ -12,8 +12,8 @@ resources:
 - resources/external-secrets.yaml
 - resources/ingresses.yaml
 - resources/namespaces.yaml
-- resources/secrets.yaml
 - resources/service-accounts.yaml
+- resources/services.yaml
 - resources/statefulsets.yaml
 patches:
 - patch: |-
