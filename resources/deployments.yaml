@@ -88,12 +88,12 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: web
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
               hostPort: null
           livenessProbe:
             httpGet:
-              port: 80
+              port: 8080
               path: /
               scheme: HTTP
             initialDelaySeconds: 10
@@ -103,7 +103,7 @@ spec:
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              port: 80
+              port: 8080
               path: /
               scheme: HTTP
             initialDelaySeconds: 10
@@ -113,7 +113,7 @@ spec:
             periodSeconds: 10
           startupProbe:
             tcpSocket:
-              port: 80
+              port: 8080
             initialDelaySeconds: 10
             failureThreshold: 60
             successThreshold: 1
