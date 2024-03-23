@@ -1,8 +1,9 @@
-_commit: v1.6.14-2-g296c517
+_commit: v1.8.2
 _src_path: /home/crthomas/code/charlesthomas/homelab-template
 additionalResources: ''
 backups: false
 helm: false
+homepageEnabled: false
 ingress: false
 labels: ''
 name: shlink
