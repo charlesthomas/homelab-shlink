@@ -1,8 +1,11 @@
-_commit: v1.6.14-2-g296c517
+_commit: v1.8.1
 _src_path: /home/crthomas/code/charlesthomas/homelab-template
 additionalResources: ''
 backups: false
 helm: false
+homepageEnabled: true
+ingHost: shlink.crt.house
+ingName: shlink
 ingress: false
 labels: ''
 name: shlink
