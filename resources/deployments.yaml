@@ -84,7 +84,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: shlink-web-client
-          image: shlinkio/shlink-web-client:4.1.0
+          image: shlinkio/shlink-web-client:4.1.1
           imagePullPolicy: IfNotPresent
           ports:
             - name: web
