@@ -5,6 +5,7 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: href.crt.lol
     external-dns.alpha.kubernetes.io/target: crt.lol
+    uptime-kuma.autodiscovery.probe.path: /rest/v2/health
   labels:
     app: shlink
   name: shlink
