@@ -35,7 +35,7 @@ metadata:
     gethomepage.dev/href: https://shlink.crt.house
     gethomepage.dev/enabled: "true"
     gethomepage.dev/description: Link Shortener
-    gethomepage.dev/group: Tools
+    gethomepage.dev/group: Web
     gethomepage.dev/icon: shlink
     gethomepage.dev/name: Shlink
     gethomepage.dev/pod-selector: ""
