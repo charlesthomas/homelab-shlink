@@ -36,10 +36,9 @@ spec:
                   matchLabels:
                     app: mariadb
                     release: shlink
-      initContainers:
       containers:
         - name: "mariadb"
-          image: docker.io/bitnami/mariadb:10.3.22-debian-10-r92
+          image: ghcr.io/linuxserver/mariadb:11.4.8-r0-ls194
           imagePullPolicy: "IfNotPresent"
           env:
             - name: MARIADB_ROOT_PASSWORD
@@ -94,7 +93,7 @@ spec:
           resources: {}
           volumeMounts:
             - name: data
-              mountPath: /bitnami/mariadb
+              mountPath: /config/databases
             - name: config
               mountPath: /opt/bitnami/mariadb/conf/my.cnf
               subPath: my.cnf
