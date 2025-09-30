@@ -13,7 +13,6 @@ spec:
       app: mariadb
       component: master
   serviceName: shlink-mariadb
-  replicas: 1
   updateStrategy:
     type: RollingUpdate
   template:

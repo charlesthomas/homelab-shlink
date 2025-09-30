@@ -8,7 +8,6 @@ metadata:
     app.kubernetes.io/name: shlink
     app.kubernetes.io/instance: shlink
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: shlink
@@ -67,7 +66,6 @@ metadata:
     app: shlink-web-client
     app.kubernetes.io/name: shlink-web-client
 spec:
-  replicas: 1
   strategy:
     type: Recreate
   selector:
