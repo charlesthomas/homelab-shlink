@@ -39,7 +39,7 @@ spec:
       initContainers:
       containers:
         - name: "mariadb"
-          image: docker.io/bitnami/mariadb:10.3.22-debian-10-r92
+          image: docker.io/bitnamilegacy/mariadb:10.3.22
           imagePullPolicy: "IfNotPresent"
           env:
             - name: MARIADB_ROOT_PASSWORD
