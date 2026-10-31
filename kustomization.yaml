@@ -36,3 +36,11 @@ patches:
         reloader.stakater.com/auto: "true"
   target:
     kind: StatefulSet
+configMapGenerator:
+- name: grafana-dashboard-shlink
+  files:
+  - grafana/shlink.json
+  options:
+    disableNameSuffixHash: true
+    labels:
+      grafana_dashboard: "1"
